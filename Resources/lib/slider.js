@@ -5,6 +5,9 @@ exports.createSlider = function() {
 	var windowWidth = Ti.Platform.displayCaps.platformWidth;
 	var windows = [];
 	var OPEN_LEFT = windowWidth * 0.84;
+	if (platform == 'ipad') {
+		OPEN_LEFT = 250;
+	}
 	var SLIDER_RIGHT = windowWidth - OPEN_LEFT;
 	var visibleWindow = null;
 	var STATUS = {
