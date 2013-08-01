@@ -18,24 +18,25 @@ function TestWindow(){
         top: '24dp',
         height: '70dp',
         width: '121dp',
-        left : 10,
+        left : ((Ti.Platform.displayCaps.platformWidth * 0.84) / 2) - (121/2),
         backgroundImage: "/images/logo-lrg.png"
     });
-    var row = Ti.UI.createTableViewRow();
-    var image = Ti.UI.createImageView({
-		url: "images/logo-lrg.png"
+   
+	var homeRow = Ti.UI.createTableViewRow({
+		title : 'Home',
 	});
-	row.add(image);
-	tableData.push(row);
+	tableData.push(homeRow);
 	
 	var ppSection = Ti.UI.createTableViewSection({
 		headerTitle:'Your Propertypond'
 	});
 	ppSection.add(Ti.UI.createTableViewRow({
-		title : 'Account'
+		title : 'Account',
+		font : { fontSize : 13 }
 	}));
 	ppSection.add(Ti.UI.createTableViewRow({
-		title : 'My Favorites'
+		title : 'My Favorites',
+		font : { fontSize : 13 }
 	}));
 	tableData.push(ppSection);
 	
@@ -43,7 +44,8 @@ function TestWindow(){
 		headerTitle : 'Discover'
 	});
 	discoverSection.add(Ti.UI.createTableViewRow({
-		title : 'Search Rentals'
+		title : 'Search Rentals',
+		font : { fontSize : 13 }
 	}));
 	tableData.push(discoverSection);
 	
@@ -54,7 +56,8 @@ function TestWindow(){
 	for (var index = 0; index < count; index++) {
 		
 		informationSection.add(Ti.UI.createTableViewRow({
-			title : ppmoreinfo[index].title
+			title : ppmoreinfo[index].title,
+			font : { fontSize : 13 }
 		}));
         // tableData.push({
 			// title : ppmoreinfo[index].title
@@ -105,6 +108,16 @@ function TestWindow(){
 				});
 			}
 			return mapWin;
+		},
+		rightNavButton : function(){
+			var filterButton =  Titanium.UI.createButton({
+		        title: 'Filter'
+		    });
+		    filterButton.addEventListener('click',function(){
+		    	alert('For Filter');
+		    });
+			
+			return filterButton;
 		}
 	});
    	tableData.push(informationSection);
@@ -113,7 +126,7 @@ function TestWindow(){
 	
 	var table = Ti.UI.createTableView({
 		rowHeight : '44dp',
-		top : 75
+		top : 100
 	});
 	
 	discoverSection.addEventListener('click', function(){
@@ -160,13 +173,21 @@ function TestWindow(){
 	
 	table.setData(tableData);
 	
+	table.addEventListener('click', function(e){
+		if (e.index == 0) {
+			slider.selectAndClose(0);
+		} else 
+			return;
+	});
 	
 	logoView.addEventListener('click',function(){
 		slider.selectAndClose(0);
 	});
+	
 	self.add(logoView);
 	self.add(table);
 	self.add(slider);
+	
 	var started = false;
 
 	self.addEventListener('open', function() {
