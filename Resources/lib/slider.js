@@ -185,31 +185,7 @@ exports.createSlider = function() {
 				win.rightNavButton = proxy.rightNavButton();
 			win.borderRadius = 2;
 			
-			var bb1 = Titanium.UI.createButtonBar({
-			    labels:['Map', 'List'],
-			    backgroundColor:'#336699',
-			    top:0,
-			    style:Titanium.UI.iPhone.SystemButtonStyle.BAR,
-			    height:25,
-			    width:100,
-			    left: (windowWidth / 2) - 60,
-			    //layout : 'horizontal'
-			});
-			var bbC = Ti.UI.createView({
-				//left: (windowWidth / 2) - 50,
-				//layout : 'horizontal'
-			});
-			bbC.add(bb1);
-			var toolbar1 = Ti.UI.iOS.createToolbar({
-			    items:[bbC],
-			    top:0,
-			    borderTop:false,
-			    borderBottom:false,
-			    translucent:true,
-			    barColor:'#3a4360',
-
-			});
-			win.add(toolbar1);
+			
 			//Can't do in both because causes crash in Android
 			// When you try to animate it
 		}

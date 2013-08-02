@@ -19,7 +19,7 @@ function TestWindow(){
         top: '24dp',
         height: '70dp',
         width: '121dp',
-        left : ((Ti.Platform.displayCaps.platformWidth * 0.84) / 2) - (121/2),
+        left : (250/2) - (121/2),
         backgroundImage: "/images/logo-lrg.png"
     });
    

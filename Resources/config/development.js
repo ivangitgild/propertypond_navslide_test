@@ -1,5 +1,8 @@
 var development = {
-    odata_url    		: 'http://odata.wfrmls.com/URE.svc/',
+    ppapi_url    		: 'http://api.propertypond.com',
+    client_id			: 'testclient',
+    client_secret		: 'testpass',
+    grant_type			: 'client_credentials',
     sha256_secret_key 	: 'DnO2w$yh!KvQ'
 }
 
