@@ -34,6 +34,7 @@ function TestWindow(){
 		var homeRow = Ti.UI.createTableViewRow({
 			title : 'Home',
 		});
+		
 		tableData.push(homeRow);
 		
 		var ppSection = Ti.UI.createTableViewSection({
@@ -165,45 +166,33 @@ function TestWindow(){
 			top : 100
 		});
 		
+		var SearchWindow = require('ui/handheld/SearchWindow');
 		discoverSection.addEventListener('click', function(){
 			slider.addWindow({
 					createFunction : function(){
-					var mWin = Ti.UI.createWindow({
-						backgroundColor : 'white'
-					
-					});
-					var mView = Ti.UI.createView();
-					var mLabel = Ti.UI.createLabel({
-						text : 'HEHEHEHE'
-					});
-					mView.add(mLabel);
-					mWin.add(mView);
-					
-					return mWin;
-				},
-				rightNavButton : function(){
-					var searchButton =  Titanium.UI.createButton({
-				        title: 'View Results'
-				    });
-				    searchButton.addEventListener('click',function(){
-				    	alert('THANK YOU');
-				    });
-					
-					return searchButton;
-				}
+						return SearchWindow()
+					},
+					rightNavButton : function(){
+						var searchButton =  Titanium.UI.createButton({
+					        title: 'View Results'
+					    });
+					    searchButton.addEventListener('click',function(){
+					    	alert('THANK YOU');
+					    });
+						
+						return searchButton;
+					}
 			});
 			slider.selectAndClose(1);
 		});
 		
 		informationSection.addEventListener('click', function(e) {
 			Ti.API.debug('table heard click');
-			//slider.selectAndClose(e.index);
-			//slider.showNewWindow().open();
-			console.log(e.index);
+			
 			var InformationDetailWindow = require('ui/handheld/InformationDetailWindow');
 			var infoWindow = new InformationDetailWindow({
-				title : ppmoreinfo[e.index - 4].title,
-				content : ppmoreinfo[e.index - 4].content
+				title : ppmoreinfo[e.index - table.data.length].title,
+				content : ppmoreinfo[e.index - table.data.length].content
 			}).open();
 		});
 		
@@ -254,10 +243,14 @@ function TestWindow(){
 		});
 	};
 	
-	Ti.App.addEventListener('reloadHomeView', function(e) {
+	var removeTheSlider = function(){
 		self.remove(slider);
 		self.remove(table);
 		self.remove(logoView);
+	};
+	
+	Ti.App.addEventListener('reloadHomeView', function(e) {
+		removeTheSlider();
 		createTheSlider();
 		slider.selectAndClose(0);
 		return self;

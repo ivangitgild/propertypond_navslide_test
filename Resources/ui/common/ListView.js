@@ -1,5 +1,7 @@
 function ListView(){
-	var listView = Ti.UI.createView();
+	var listView = Ti.UI.createView({
+		backgroundColor : 'white'
+	});
 	var mL = Ti.UI.createLabel({
 		text : 'List View'
 	});
