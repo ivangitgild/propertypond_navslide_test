@@ -16,6 +16,8 @@ function TestWindow(){
 	var table = null;
 	var logoView = null;
 	
+	var isReloaded = false;
+	
 	var createTheSlider = function(){
 		var role = Ti.App.Properties.getString('role');
 	
@@ -114,11 +116,30 @@ function TestWindow(){
 	   	slider.addWindow({
 			createFunction : function(){
 				mainWin = Ti.UI.createWindow({
-					backgroundColor : 'black',
+					backgroundColor : 'white',
 				});
 				
 				if (Ti.Platform.osname == 'android') {
-					
+					var aL = Ti.UI.createLabel({
+						text : 'Map View for Android Here'
+					});
+					mainWin.add(aL);
+					var ButtonBarView = require('ui/widgets/ButtonBarView');
+					var bbv = new ButtonBarView({
+						labels : ['Map','List'],
+						width : 100,
+						top : 0
+					});
+					bbv.addEventListener('bbvClick', function(e){
+						if (e.index == 1) {
+							mainWin.remove(mapView);
+							mainWin.add(listView);
+						} else {
+							mainWin.remove(listView);
+							mainWin.add(mapView);
+						}
+					});
+					mainWin.add(bbv);
 				}else{
 
 					if (isListView) {
@@ -157,9 +178,9 @@ function TestWindow(){
 				return filterButton;
 			}
 		});
-	   	tableData.push(informationSection);
 		
-		slider.preLoadWindow(0);
+	   	tableData.push(informationSection);
+
 		
 		table = Ti.UI.createTableView({
 			rowHeight : '44dp',
@@ -167,7 +188,7 @@ function TestWindow(){
 		});
 		
 		var SearchWindow = require('ui/handheld/SearchWindow');
-		discoverSection.addEventListener('click', function(){
+		discoverSection.addEventListener('click', function(e){
 			slider.addWindow({
 					createFunction : function(){
 						return SearchWindow()
@@ -205,9 +226,24 @@ function TestWindow(){
 				return;
 		});
 		
+		
+		homeRow.addEventListener('click',function(){
+			console.log('test');
+			slider.selectAndClose(0);
+		});
+		
+		if (isReloaded) {
+			setTimeout(function(){
+				homeRow.fireEvent('click');
+				isReloaded = false;
+			}, 2000);
+		}
+		
 		logoView.addEventListener('click',function(){
 			slider.selectAndClose(0);
 		});
+		
+		slider.preLoadWindow(0);
 		
 		self.add(logoView);
 		self.add(table);
@@ -244,16 +280,22 @@ function TestWindow(){
 	};
 	
 	var removeTheSlider = function(){
+		//var r = require('lib/slider').removeSlider();
 		self.remove(slider);
 		self.remove(table);
 		self.remove(logoView);
+		//slider = null;
+		//table = null;
+		//logoView = null;
 	};
 	
 	Ti.App.addEventListener('reloadHomeView', function(e) {
+		isReloaded = true;
 		removeTheSlider();
 		createTheSlider();
-		slider.selectAndClose(0);
-		return self;
+		//slider.preLoadWindow(0);
+		//slider.selectAndClose(0);
+		return self.open();
     });
     
     createTheSlider();

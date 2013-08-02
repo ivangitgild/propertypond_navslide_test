@@ -1,4 +1,11 @@
 var platform = Ti.Platform.osname;
+var slider = null;
+var windows = [];
+
+exports.removeSlider = function(){
+	slider = null;
+	windows = [];
+};
 
 exports.createSlider = function() {
 
